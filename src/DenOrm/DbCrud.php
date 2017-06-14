@@ -16,7 +16,7 @@ class DbCrud implements Crud
     /**
      * DbCrud constructor.
      *
-     * @param string$model_class the name of the model class (hint, use the class static member, like this: ClassName::class)
+     * @param string $model_class the name of the model class (hint, use the class static member, like this: ClassName::class)
      * @param string $main_table the main database table containing the data for the model
      * @param string|array $primary_key the primary key field name, or array of field names, if it's a composite PK
      */

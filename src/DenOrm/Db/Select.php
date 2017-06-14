@@ -28,10 +28,6 @@ class Select
         'limit'
     );
 
-    const MULTI_SHOP_PLACEHOLDER_SHOP_ID = '!!shop_id!!';
-    const MULTI_SHOP_PLACEHOLDER_DATABASE = '!!db!!';
-    const MULTI_SHOP_PLACEHOLDER_PLAIN_SHOP_ID = '!!shop_id_plain!!';
-
     /** @var array associative array with parts (allowed keys listed in PART_NAMES constant) */
     private $parts = array();
 

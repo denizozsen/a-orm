@@ -1,0 +1,19 @@
+{
+    "name": "denizozsen/den-orm",
+    "authors": [
+        {
+            "name": "Deniz Ozsen",
+            "email": "deniz.ozsen@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "DenOrm": "src"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.7.x-dev"
+    },
+    "minimum-stability": "dev"
+}
+

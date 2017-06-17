@@ -20,8 +20,8 @@ class MysqliConnection extends Connection
         // because mysqli does not support named parameters
         $this->convertNamedParameters($sql, $parameters);
 
-        $statement = $this->mysqli->prepare($mysqli_sql);
-        foreach ($mysqli_parameters as $i => $value) {
+        $statement = $this->mysqli->prepare($sql);
+        foreach ($parameters as $i => $value) {
             $type = 's';
             if (is_integer($value)) {
                 $type = 'i';
@@ -30,8 +30,12 @@ class MysqliConnection extends Connection
             }
             $statement->bind_param($type, $parameters[$i]);
         }
+        $statement->execute();
         $result = $statement->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $statement->close();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $result->close();
+        return $rows;
     }
 
     /**

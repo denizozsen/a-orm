@@ -1,20 +1,28 @@
 {
     "name": "denizozsen/a-orm",
-    "description": "Another ORM Library for PHP",
     "type": "library",
+    "description": "Another ORM Library for PHP",
+    "keywords": ["orm", "active-record", "activerecord", "repository", "php"],
+    "homepage": "https://github.com/denizozsen/a-orm",
+    "license": "MIT",
     "authors": [
         {
             "name": "Deniz Ozsen",
-            "email": "deniz.ozsen@gmail.com"
+            "email": "deniz.ozsen@gmail.com",
+            "role": "Developer"
         }
     ],
-    "autoload": {
-        "psr-0": {
-            "AOrm": "src"
-        }
+    "require": {
+        "php": ">=5.6.0"
     },
     "require-dev": {
         "phpunit/phpunit": "5.7.x-dev"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "AOrm": "src"
+        }
+    }
 }
+

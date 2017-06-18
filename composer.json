@@ -18,7 +18,6 @@
     "require-dev": {
         "phpunit/phpunit": "5.7.x-dev"
     },
-    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
             "AOrm": "src"

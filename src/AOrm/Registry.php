@@ -1,9 +1,9 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
-use DenOrm\Db\MysqliConnection;
-use DenOrm\Db\PdoConnection;
+use AOrm\Db\MysqliConnection;
+use AOrm\Db\PdoConnection;
 
 /**
  * The Registry provides a way to register the service instances required by DenOrm, such as the database connection.

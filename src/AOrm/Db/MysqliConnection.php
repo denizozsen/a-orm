@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm\Db;
+namespace AOrm\Db;
 
 class MysqliConnection extends Connection
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
 /**
  * A repository is an object that provides a collection-like interface for retrieving/saving/deleting Model instances.

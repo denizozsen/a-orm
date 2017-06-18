@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm\Db;
+namespace AOrm\Db;
 
 /**
  * A Select object represents a SQL SELECT statement. The different parts of the SELECT statement can be manipulated

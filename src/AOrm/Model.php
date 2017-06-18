@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
 /**
  * This can be used as a base class for data models. It encapsulates a data array for holding the key-value pairs

@@ -39,8 +39,8 @@ $dsn = "mysql:dbname={$db};host={$host}";
 $pdo = new PDO($dsn, $user, $password);
 
 // Tell DenOrm to use the mysqli/PDO instance we've just created
-//\DenOrm\Registry::registerMysqliConnection($mysqli);
-\DenOrm\Registry::registerPdoConnection($pdo);
+//\AOrm\Registry::registerMysqliConnection($mysqli);
+\AOrm\Registry::registerPdoConnection($pdo);
 
 // Fetch all Post records where the author is set to 'Deniz'
 $my_posts = Post::fetchAll(['author' => 'Deniz']);
@@ -59,4 +59,3 @@ foreach ($my_posts as $post) {
 echo $nl . $nl . 'All row data via getData()' . $nl;
 $data = $my_posts[0]->getData();
 var_dump($data);
-

@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
 /**
  * An object implementing the Crud interface knows how to fetch, save and delete the data for a particular model type.

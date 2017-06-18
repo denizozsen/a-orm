@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
 /**
  * Factory for creating Condition instances.

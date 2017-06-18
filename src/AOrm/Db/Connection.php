@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm\Db;
+namespace AOrm\Db;
 
 /**
  * The database connection wrapper that DenOrm uses internally.

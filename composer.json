@@ -1,5 +1,7 @@
 {
-    "name": "denizozsen/den-orm",
+    "name": "denizozsen/a-orm",
+    "description": "Another ORM Library for PHP",
+    "type": "library",
     "authors": [
         {
             "name": "Deniz Ozsen",
@@ -8,7 +10,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "DenOrm": "src"
+            "AOrm": "src"
         }
     },
     "require-dev": {

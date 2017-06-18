@@ -1,7 +1,8 @@
-# den-orm
+# a-orm
 
-A simple ORM library
+Another ORM Library for PHP
 
+Features
 * Supports both PDO and Mysqli
 * Implements the ActiveRecord pattern
 * Coming soon: Repository pattern (possibility to cut out persistence functionality from model classes and work with POPOs)

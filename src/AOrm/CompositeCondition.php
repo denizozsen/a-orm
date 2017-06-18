@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
 /**
  * A CompositeCondition is a condition that combines two or more other conditions via an operator (either AND or OR).

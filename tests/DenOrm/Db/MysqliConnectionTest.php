@@ -1,14 +1,16 @@
 <?php
 
-namespace DenOrm\Db;
+namespace AOrm\Db;
 
 class MysqliConnectionTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var MysqliConnection */
     private $mysqli_connection;
 
     public function setUp()
     {
-        $mock_mysqli = $this->createMock('mysqli');
+        /** @var \mysqli $mock_mysqli */
+        $mock_mysqli = $this->createMock('\mysqli');
         $this->mysqli_connection = new MysqliConnection($mock_mysqli);
     }
 

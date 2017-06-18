@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
 /**
  * A SimpleCondition is used to narrow down the result set of a model fetching instruction. It consists of a property

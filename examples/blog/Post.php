@@ -1,7 +1,7 @@
 <?php
 
-use DenOrm\DbCrud;
-use DenOrm\Model;
+use AOrm\DbCrud;
+use AOrm\Model;
 
 /**
  * The blog post model.

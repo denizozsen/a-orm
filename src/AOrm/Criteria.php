@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
 /**
  * A Criteria object is used to describe what data should be retrieved via a call to either fetchOne() or fetchAll()

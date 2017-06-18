@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
 /**
  * Represents an error condition within DenOrm.
@@ -9,5 +9,4 @@ namespace DenOrm;
  */
 class DenOrmException extends \Exception
 {
-
 }

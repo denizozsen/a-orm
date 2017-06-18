@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm;
+namespace AOrm;
 
 /**
  * A Condition object is used to describe a data condition that can be used as part of the criteria for a

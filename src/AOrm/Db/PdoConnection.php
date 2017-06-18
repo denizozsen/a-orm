@@ -1,6 +1,6 @@
 <?php
 
-namespace DenOrm\Db;
+namespace AOrm\Db;
 
 class PdoConnection extends Connection
 {

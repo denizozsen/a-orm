@@ -37,6 +37,6 @@ class PdoConnection extends Connection
      */
     public function escapeString($string)
     {
-        return $this->pdo->quote($string);
+        return trim($this->pdo->quote($string), "'");
     }
 }

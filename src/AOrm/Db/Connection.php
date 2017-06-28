@@ -3,9 +3,9 @@
 namespace AOrm\Db;
 
 /**
- * The database connection wrapper that DenOrm uses internally.
+ * The database connection wrapper that AOrm uses internally.
  *
- * @package DenOrm\Db
+ * @package AOrm\Db
  */
 abstract class Connection
 {

@@ -6,22 +6,22 @@ use AOrm\Db\MysqliConnection;
 use AOrm\Db\PdoConnection;
 
 /**
- * The Registry provides a way to register the service instances required by DenOrm, such as the database connection.
+ * The Registry provides a way to register the service instances required by AOrm, such as the database connection.
  *
- * @package DenOrm
+ * @package AOrm
  */
 class Registry
 {
     private static $db_connection = null;
 
     /**
-     * @return \DenOrm\Db\Connection
-     * @throws DenOrmException
+     * @return \AOrm\Db\Connection
+     * @throws AOrmException
      */
     public static function getDbConnection()
     {
         if (is_null(self::$db_connection)) {
-            throw new DenOrmException('No db connection was registered');
+            throw new AOrmException('No db connection was registered');
         }
 
         return self::$db_connection;

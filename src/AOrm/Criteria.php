@@ -6,7 +6,7 @@ namespace AOrm;
  * A Criteria object is used to describe what data should be retrieved via a call to either fetchOne() or fetchAll()
  * to a Model sub-class.
  *
- * @package DenOrm
+ * @package AOrm
  */
 class Criteria
 {
@@ -176,7 +176,7 @@ class Criteria
 /**
  * A criteria object that returns the default (or empty) value for each of its components.
  *
- * @package DenOrm
+ * @package AOrm
  */
 class NullCriteria extends Criteria
 {
@@ -213,10 +213,10 @@ class NullCriteria extends Criteria
     }
 
     /**
-     * @throws DenOrmException unconditionally
+     * @throws AOrmException unconditionally
      */
     private function preventModification()
     {
-        throw new DenOrmException('NullCriteria cannot be modified');
+        throw new AOrmException('NullCriteria cannot be modified');
     }
 }

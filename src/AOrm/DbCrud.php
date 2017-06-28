@@ -5,7 +5,7 @@ namespace AOrm;
 /**
  * A default Crud implementation that manipulates model data in the database.
  *
- * @package DenOrm
+ * @package AOrm
  */
 class DbCrud implements Crud
 {
@@ -91,7 +91,7 @@ class DbCrud implements Crud
      */
     public function getRelatedJoinFragment($relation)
     {
-        throw new DenOrmException("getRelatedJoinFragment() is not implemented!");
+        throw new AOrmException("getRelatedJoinFragment() is not implemented!");
     }
 
     /**

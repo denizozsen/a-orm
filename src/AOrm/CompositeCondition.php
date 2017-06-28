@@ -5,7 +5,7 @@ namespace AOrm;
 /**
  * A CompositeCondition is a condition that combines two or more other conditions via an operator (either AND or OR).
  *
- * @package DenOrm
+ * @package AOrm
  */
 class CompositeCondition implements Condition
 {

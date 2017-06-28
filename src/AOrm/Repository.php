@@ -5,7 +5,7 @@ namespace AOrm;
 /**
  * A repository is an object that provides a collection-like interface for retrieving/saving/deleting Model instances.
  *
- * @package DenOrm
+ * @package AOrm
  */
 class Repository
 {
@@ -28,7 +28,7 @@ class Repository
      * @param mixed $primary_key_value the primary key value
      * @param Criteria $extra_criteria object with fetching criteria (e.g. related models, immutable, etc)
      * @return Model the model instance representing the fetched record
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public function getByPrimaryKey($primary_key_value, Criteria $extra_criteria = null)
     {
@@ -40,7 +40,7 @@ class Repository
      *
      * @param Criteria|Condition|array|null $criteria the fetching criteria, or null, to fetch the first one of all
      * @return Model|null the model instance representing the fetched record, or null, if no such record was found
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public function getOne($criteria = null)
     {
@@ -52,7 +52,7 @@ class Repository
      *
      * @param Criteria|Condition|array|null $criteria the fetching criteria, or null, to fetch all
      * @return Model[] array of model instances representing the fetched records
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public function getAll($criteria = null)
     {
@@ -63,7 +63,7 @@ class Repository
      * Saves the the given model instance.
      *
      * @param Model $model the model instance to save
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public function save(Model $model)
     {
@@ -74,7 +74,7 @@ class Repository
      * Deletes given model instance.
      *
      * @param Model $model the model instance to delete
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public function delete(Model $model)
     {
@@ -85,12 +85,12 @@ class Repository
      * Throws an exception, if the given class name is not the name of a sub-class of Model
      *
      * @param string $class a class name
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     private function ensureModelSubclass($class)
     {
         if ( !is_string($class) || !is_a($class, Model::class, true) ) {
-            throw new DenOrmException(
+            throw new AOrmException(
                 "model_class must be the name of a sub-class of " . Model::class . ", but was: {$class}");
         }
     }

@@ -2,6 +2,11 @@
 
 namespace AOrm\Db;
 
+/**
+ * A database connection implemented by the mysqli client library.
+ *
+ * @package AOrm\Db
+ */
 class MysqliConnection extends Connection
 {
     private $mysqli;

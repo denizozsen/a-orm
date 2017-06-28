@@ -5,7 +5,7 @@ namespace AOrm;
 /**
  * Factory for creating Condition instances.
  *
- * @package DenOrm
+ * @package AOrm
  */
 class ConditionFactory
 {

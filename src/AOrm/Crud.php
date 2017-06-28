@@ -5,7 +5,7 @@ namespace AOrm;
 /**
  * An object implementing the Crud interface knows how to fetch, save and delete the data for a particular model type.
  *
- * @package DenOrm
+ * @package AOrm
  */
 interface Crud
 {
@@ -24,7 +24,7 @@ interface Crud
      *
      * @param Criteria|null $criteria object describing the fetching criteria, or null, to fetch the first of all
      * @return array|null associative array representing the fetched record, or null, if the record is not found
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public function fetchOne(Criteria $criteria = null);
 
@@ -33,7 +33,7 @@ interface Crud
      *
      * @param Criteria|null $criteria object describing the fetching criteria, or null, to fetch all
      * @return array array of associative arrays representing the fetched records
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public function fetchAll(Criteria $criteria = null);
 
@@ -50,7 +50,7 @@ interface Crud
      *
      * @param array $record associative array representing the record to be saved
      * @return mixed the primary key value of the saved record, either a single value or an associative array, keyed on column names
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public function save(array $record);
 
@@ -58,7 +58,7 @@ interface Crud
      * Deletes the record with the given primary key value.
      *
      * @param mixed $pk_value the primary key value of the record to be deleted, either a single value or an associative array, keyed on column names
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public function delete($pk_value);
 }

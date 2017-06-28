@@ -2,6 +2,11 @@
 
 namespace AOrm\Db;
 
+/**
+ * A database connection implemented by the PDO client library.
+ *
+ * @package AOrm\Db
+ */
 class PdoConnection extends Connection
 {
     private $pdo;

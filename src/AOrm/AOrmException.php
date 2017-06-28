@@ -5,8 +5,8 @@ namespace AOrm;
 /**
  * Represents an error condition within DenOrm.
  *
- * @package DenOrm
+ * @package AOrm
  */
-class DenOrmException extends \Exception
+class AOrmException extends \Exception
 {
 }

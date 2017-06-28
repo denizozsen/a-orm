@@ -6,7 +6,7 @@ namespace AOrm;
  * A Condition object is used to describe a data condition that can be used as part of the criteria for a
  * model fetching instruction.
  *
- * @package DenOrm
+ * @package AOrm
  */
 interface Condition
 {
@@ -34,7 +34,7 @@ interface Condition
     /**
      * @param string|null $alias alias to be used as prefix for property names, or null, to not use an alias prefix
      * @return string a string representation of the condition, that can be used for fetching a model or set of models
-     * @throws DenOrmException if the type set on this SimpleCondition is not supported by render()
+     * @throws AOrmException if the type set on this SimpleCondition is not supported by render()
      */
     public function render($alias = null);
 

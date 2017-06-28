@@ -6,7 +6,7 @@ namespace AOrm;
  * A SimpleCondition is used to narrow down the result set of a model fetching instruction. It consists of a property
  * name (the 'key'), a condition type (e.g. EQUALS, GREATER_THAN, IN, etc) and one or more values.
  *
- * @package DenOrm
+ * @package AOrm
  */
 class SimpleCondition implements Condition
 {
@@ -120,7 +120,7 @@ class SimpleCondition implements Condition
                 return $this->key;
                 break;
             default:
-                throw new DenOrmException("Unsupported condition type: {$this->type}");
+                throw new AOrmException("Unsupported condition type: {$this->type}");
         }
     }
 

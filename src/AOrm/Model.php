@@ -14,7 +14,7 @@ namespace AOrm;
  * TODO - document relations
  * TODO - document the important methods that can be overridden
  *
- * @package DenOrm
+ * @package AOrm
  */
 abstract class Model
 {
@@ -48,7 +48,7 @@ abstract class Model
      * Returns the model data instance.
      *
      * @return Crud
-     * @throws DenOrmException if the model data is not correctly configured
+     * @throws AOrmException if the model data is not correctly configured
      */
     public static final function getCrud()
     {
@@ -105,7 +105,7 @@ abstract class Model
      * @param mixed $primary_key_value the primary key value
      * @param Criteria $extra_criteria object with fetching criteria (e.g. related models, immutable, etc)
      * @return static the model instance representing the fetched record
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public static function fetchByPrimaryKey($primary_key_value, Criteria $extra_criteria = null)
     {
@@ -124,7 +124,7 @@ abstract class Model
 
         $model_instance = self::fetchOne($criteria);
         if (!$model_instance) {
-            throw new DenOrmException(
+            throw new AOrmException(
                 "Unable to find " . get_called_class() . " with primary key: "
                     . str_replace("\n", '', var_export($primary_key_value, true))
             );
@@ -138,7 +138,7 @@ abstract class Model
      *
      * @param Criteria|Condition|array|null $criteria the fetching criteria, or null, to fetch the first one of all
      * @return static|null the model instance representing the fetched record, or null, if no such record was found
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public static function fetchOne($criteria = null)
     {
@@ -152,7 +152,7 @@ abstract class Model
      *
      * @param Criteria|Condition|array|null $criteria the fetching criteria, or null, to fetch all
      * @return static[] array of model instances representing the fetched records
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public static function fetchAll($criteria = null)
     {
@@ -167,7 +167,7 @@ abstract class Model
     /**
      * Saves the the record represented by this model instance.
      *
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public final function save()
     {
@@ -195,12 +195,12 @@ abstract class Model
     /**
      * Deletes the record represented by thsui model instance.
      *
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public final function delete()
     {
         if ($this->isNew()) {
-            throw new DenOrmException("New model cannot be deleted");
+            throw new AOrmException("New model cannot be deleted");
         }
 
         // Call beforeDelete event
@@ -267,7 +267,7 @@ abstract class Model
      *
      * @param string $relation_name a relation name
      * @return mixed the model, or list of models, related to this model via the given relation name
-     * @throws DenOrmException if the given relation name is not configured in this model
+     * @throws AOrmException if the given relation name is not configured in this model
      */
     public final function getRelated($relation_name = null)
     {
@@ -278,7 +278,7 @@ abstract class Model
             $relations = self::getCachedRelations();
 
             if ($relation_name !== null && !isset($relations[$relation_name])) {
-                throw new DenOrmException("Unknown relation name: {$relation_name}");
+                throw new AOrmException("Unknown relation name: {$relation_name}");
             }
 
             $relation_names = $relation_name ? (array)$relation_name : array_keys($relations);
@@ -326,7 +326,7 @@ abstract class Model
      *
      * @param string $key the key
      * @return mixed the value corresponding to the given key
-     * @throws DenOrmException if the requested key is not found
+     * @throws AOrmException if the requested key is not found
      */
     public final function __get($key)
     {
@@ -336,7 +336,7 @@ abstract class Model
         }
 
         if (!array_key_exists($key, $this->data)) {
-            throw new DenOrmException("no such key: {$key}");
+            throw new AOrmException("no such key: {$key}");
         }
 
         return $this->data[$key];
@@ -350,12 +350,12 @@ abstract class Model
      *
      * @param string $key the key
      * @param mixed $value the value
-     * @throws DenOrmException
+     * @throws AOrmException
      */
     public final function __set($key, $value)
     {
         if ($this->immutable) {
-            throw new DenOrmException("cannot change immutable object");
+            throw new AOrmException("cannot change immutable object");
         }
 
         $this->data[$key] = $value;
@@ -473,11 +473,11 @@ abstract class Model
      *   - Condition object: a new Criteria object is returned with the given Condition set
      *   - array: a new Criteria object is returned with an EQUALS condition for each key/value pair in the given array
      *   - null: null is returned
-     *   - any other type: a DenOrmException is thrown
+     *   - any other type: a AOrmException is thrown
      *
      * @param Criteria|Condition|array|null $criteria the criteria
      * @return Criteria the result Criteria object
-     * @throws DenOrmException if the given criteria value is a type other than Criteria, Condition, array or null
+     * @throws AOrmException if the given criteria value is a type other than Criteria, Condition, array or null
      */
     protected static function processCriteria($criteria)
     {
@@ -487,7 +487,7 @@ abstract class Model
             $criteria_object = Criteria::create();
             foreach ($criteria as $key => $value) {
                 if (is_int($key)) {
-                    throw new DenOrmException('criteria array must be associative');
+                    throw new AOrmException('criteria array must be associative');
                 }
                 $criteria_object->addCondition(static::condition()->equals($key, $value));
             }
@@ -499,7 +499,7 @@ abstract class Model
         }
 
         $type = (gettype($criteria) == 'object') ? get_class($criteria) : gettype($criteria);
-        throw new DenOrmException("Unhandled criteria type: {$type}");
+        throw new AOrmException("Unhandled criteria type: {$type}");
     }
 
     /**
@@ -507,7 +507,7 @@ abstract class Model
      *
      * @param Model $model the model to which to add requested related models
      * @param array $related_map the map of names of related models
-     * @throws DenOrmException if an invalid relation name is encountered
+     * @throws AOrmException if an invalid relation name is encountered
      */
     private static function addRelatedModels(Model $model, array $related_map)
     {
@@ -535,7 +535,7 @@ abstract class Model
         // Ensure that the configured crud class implements the Crud interface
         if (!is_a($crud, Crud::class, true)) {
             $crud_class_name = is_object($crud) ? get_class($crud) : $crud;
-            throw new DenOrmException("Configured crud class {$crud_class_name} must implement " . Crud::class);
+            throw new AOrmException("Configured crud class {$crud_class_name} must implement " . Crud::class);
         }
     }
 }

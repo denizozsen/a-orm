@@ -43,15 +43,19 @@ abstract class Connection
     {
         // Sanitize all values in $insert_array and convert booleans to integers
         $insert_array = array_map(function ($value) {
-            return (is_bool($value) || is_integer($value))
-                ? (int)$value
-                : ("'" . $this->escapeString($value) . "'");
+            return (is_bool($value) || is_integer($value)) ? (int)$value : $value;
         }, $insert_array);
 
-        // Generate strings column and value list
+        // Generate column list string
         $column_value_array = $insert_array;
-        $columns = implode(",", array_keys($column_value_array));
-        $values = implode(",", array_values($column_value_array));
+        $column_list_string = implode(",", array_keys($column_value_array));
+
+        // Generate parameter array and list string
+        $parameters = [];
+        array_walk($column_value_array, function($value, $key) use(&$parameters) {
+            $parameters[':' . $key] = $value;
+        });
+        $parameter_name_list_string = implode(",", array_values($parameters));
 
         // Generate string for on-duplicate-key-update assignment list
         $on_duplicate_assignments_array = array_map(function($column) {
@@ -62,10 +66,10 @@ abstract class Connection
         // Perform insert/update query
         $this->query("
             INSERT INTO {$table_name} (
-                {$columns}
+                {$column_list_string}
             )
             VALUES (
-                {$values}
+                {$parameter_name_list_string}
             )
             ON DUPLICATE KEY UPDATE
                 {$on_duplicate_assignments}

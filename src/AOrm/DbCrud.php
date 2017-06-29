@@ -121,7 +121,7 @@ class DbCrud implements Crud
         $table = $this->getMainTable();
         $conditions_sql = $this->renderConditions($pk_value);
         $sql = sprintf('DELETE FROM %s WHERE %s', $table, $conditions_sql);
-        Registry::getDbConnection()->query($sql, $this->conditionsToParameters($pk_value));
+        Registry::getDbConnection()->execute($sql, $this->conditionsToParameters($pk_value));
     }
 
     /**

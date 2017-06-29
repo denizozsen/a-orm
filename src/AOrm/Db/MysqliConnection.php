@@ -46,6 +46,30 @@ class MysqliConnection extends Connection
     /**
      * {@inheritdoc}
      */
+    public function execute($sql, $parameters = [])
+    {
+        // Convert PDO-style named parameters to question mark placeholders,
+        // because mysqli does not support named parameters
+        $this->convertNamedParameters($sql, $parameters);
+
+        $statement = $this->mysqli->prepare($sql);
+        foreach ($parameters as $i => $value) {
+            $type = 's';
+            if (is_integer($value)) {
+                $type = 'i';
+            } elseif (is_double($value)) {
+                $type = 'd';
+            }
+            $statement->bind_param($type, $parameters[$i]);
+        }
+        $success = $statement->execute();
+        $statement->close();
+        return $success;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function lastInsertId()
     {
         return $this->mysqli->insert_id;

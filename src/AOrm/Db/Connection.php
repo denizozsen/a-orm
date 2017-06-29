@@ -20,6 +20,16 @@ abstract class Connection
     public abstract function query($sql, $parameters = []);
 
     /**
+     * Executes the given SQL, as a prepared statement, and returns success status as a boolean. This is for
+     * non-resultset statements like INSERT and UPDATE.
+     *
+     * @param string $sql the SQL statement
+     * @param array $parameters an optional associative array of query parameters, as name/value pairs
+     * @return bool true on success, false on failure
+     */
+    public abstract function execute($sql, $parameters = []);
+
+    /**
      * @return mixed the row ID of the last row that was inserted into the database
      */
     public abstract function lastInsertId();
@@ -76,7 +86,7 @@ abstract class Connection
         ";
 
         // Perform insert/update query
-        $this->query($sql, $parameters);
+        $this->execute($sql, $parameters);
 
         // Return last insert id
         return $this->lastInsertId();

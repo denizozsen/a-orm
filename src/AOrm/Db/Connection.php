@@ -55,7 +55,7 @@ abstract class Connection
         array_walk($column_value_array, function($value, $key) use(&$parameters) {
             $parameters[':' . $key] = $value;
         });
-        $parameter_name_list_string = implode(",", array_values($parameters));
+        $parameter_name_list_string = implode(",", array_keys($parameters));
 
         // Generate string for on-duplicate-key-update assignment list
         $on_duplicate_assignments_array = array_map(function($column) {
@@ -63,8 +63,8 @@ abstract class Connection
         }, array_keys($insert_array));
         $on_duplicate_assignments = implode(',', $on_duplicate_assignments_array);
 
-        // Perform insert/update query
-        $this->query("
+        // Generate SQL text\
+        $sql = "
             INSERT INTO {$table_name} (
                 {$column_list_string}
             )
@@ -73,7 +73,10 @@ abstract class Connection
             )
             ON DUPLICATE KEY UPDATE
                 {$on_duplicate_assignments}
-        ");
+        ";
+
+        // Perform insert/update query
+        $this->query($sql, $parameters);
 
         // Return last insert id
         return $this->lastInsertId();

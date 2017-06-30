@@ -193,6 +193,36 @@ abstract class Model
     }
 
     /**
+     * Inserts the the record represented by this model instance.
+     * Unlike save(), this method will not update an existing record, but will throw an
+     * AOrmException instead, e.g. if a unique key constraint is violated by the insert.
+     *
+     * @throws AOrmException
+     */
+    public final function insert()
+    {
+        // Call beforeSave event
+        $this->beforeSave();
+
+        // Insert into persistent storage via the model's Crud
+        $primary_key_value = static::getCrud()->insert($this->getData());
+
+        // Set primary value(s) in data array
+        if (!is_array($primary_key_value)) {
+            $primary_key_value = [ self::getCrud()->getPrimaryKey() => $primary_key_value ];
+        }
+        foreach ($primary_key_value as $key => $value) {
+            $this->data[$key] = $value;
+        }
+
+        // Clear new flag
+        $this->is_new = false;
+
+        // Call afterSave event
+        $this->afterSave();
+    }
+
+    /**
      * Deletes the record represented by thsui model instance.
      *
      * @throws AOrmException

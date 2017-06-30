@@ -43,13 +43,14 @@ abstract class Connection
     public abstract function escapeString($string);
 
     /**
-     * Performs an INSERT ... ON DUPLICATE KEY UPDATE statement.
+     * Performs an INSERT statement, optionally with an ON DUPLICATE KEY UPDATE clause.
      *
      * @param string $table_name the name of the table into which to insert/update
      * @param array $insert_array an associative array with the keys/values to insert/update
+     * @param bool $on_duplicate_key_update set to true to add an ON DUPLICATE KEY UPDATE clause with all fields
      * @return int the insert_id returned by MySQL
      */
-    public function insertOnDuplicateKeyUpdate($table_name, $insert_array)
+    public function insert($table_name, $insert_array, $on_duplicate_key_update = false)
     {
         // Sanitize all values in $insert_array and convert booleans to integers
         $insert_array = array_map(function ($value) {
@@ -67,13 +68,7 @@ abstract class Connection
         });
         $parameter_name_list_string = implode(",", array_keys($parameters));
 
-        // Generate string for on-duplicate-key-update assignment list
-        $on_duplicate_assignments_array = array_map(function($column) {
-            return "{$column} = VALUES({$column})";
-        }, array_keys($insert_array));
-        $on_duplicate_assignments = implode(',', $on_duplicate_assignments_array);
-
-        // Generate SQL text\
+        // Generate SQL text
         $sql = "
             INSERT INTO {$table_name} (
                 {$column_list_string}
@@ -81,9 +76,19 @@ abstract class Connection
             VALUES (
                 {$parameter_name_list_string}
             )
+        ";
+
+        // Append ON DUPLICATE KEY UPDATE clause, if requested
+        if ($on_duplicate_key_update) {
+            $on_duplicate_assignments_array = array_map(function($column) {
+                return "{$column} = VALUES({$column})";
+            }, array_keys($insert_array));
+            $on_duplicate_assignments = implode(',', $on_duplicate_assignments_array);
+            $sql .= "
             ON DUPLICATE KEY UPDATE
                 {$on_duplicate_assignments}
-        ";
+            ";
+        }
 
         // Perform insert/update query
         $this->execute($sql, $parameters);

@@ -55,6 +55,15 @@ interface Crud
     public function save(array $record);
 
     /**
+     * Inserts the given record. This is different from save() in that an exception will be thrown on duplicate.
+     *
+     * @param array $record associative array representing the record to be saved
+     * @return mixed the primary key value of the saved record, either a single value or an associative array, keyed on column names
+     * @throws AOrmException
+     */
+    public function insert(array $record);
+
+    /**
      * Deletes the record with the given primary key value.
      *
      * @param mixed $pk_value the primary key value of the record to be deleted, either a single value or an associative array, keyed on column names

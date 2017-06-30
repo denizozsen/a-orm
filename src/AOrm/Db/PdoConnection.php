@@ -35,7 +35,6 @@ class PdoConnection extends Connection
     public function execute($sql, $parameters = [])
     {
         $statement = $this->pdo->prepare($sql);
-        $statement->nextRowset();
         $success = $statement->execute($parameters);
         return $success;
     }

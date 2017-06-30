@@ -65,25 +65,29 @@ class DbCrud implements Crud
      */
     public function fetchAll(Criteria $criteria = null)
     {
-        if (!$criteria) {
-            $criteria = Criteria::null();
+        try {
+            if (!$criteria) {
+                $criteria = Criteria::null();
+            }
+
+            $main_table = $this->getMainTable();
+
+            $query = "
+                SELECT
+                    *
+                FROM {$main_table}
+            ";
+
+            $parameters = array();
+            if ($criteria->getCondition()) {
+                $query .= 'WHERE ' . $criteria->getCondition()->render();
+                $parameters = $criteria->getCondition()->getParameters();
+            }
+
+            return Registry::getDbConnection()->query($query, $parameters);
+        } catch (\Exception $e) {
+            throw new AOrmException($e->getMessage(), 0, $e);
         }
-
-        $main_table = $this->getMainTable();
-
-        $query = "
-            SELECT
-                *
-            FROM {$main_table}
-        ";
-
-        $parameters = array();
-        if ($criteria->getCondition()) {
-            $query .= 'WHERE ' . $criteria->getCondition()->render();
-            $parameters = $criteria->getCondition()->getParameters();
-        }
-
-        return Registry::getDbConnection()->query($query, $parameters);
     }
 
     /**
@@ -99,17 +103,23 @@ class DbCrud implements Crud
      */
     public function save(array $record)
     {
-        $table = $this->getMainTable();
-        $db_connection = Registry::getDbConnection();
-        $save_data = $db_connection->getSubsetArrayForInsert($record, $table);
-        $pk_value = $db_connection->insertOnDuplicateKeyUpdate($table, $save_data);
-        if (!$pk_value) {
-            $primary_key = $this->getPrimaryKey();
-            $pk_value = is_array($primary_key)
-                ? array_intersect_key($record, array_flip($primary_key))
-                : $record[$primary_key];
+        try {
+            return $this->saveOrInsert($record, true);
+        } catch (\Exception $e) {
+            throw new AOrmException($e->getMessage(), 0, $e);
         }
-        return $pk_value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function insert(array $record)
+    {
+        try {
+            return $this->saveOrInsert($record, false);
+        } catch (\Exception $e) {
+            throw new AOrmException($e->getMessage(), 0, $e);
+        }
     }
 
     /**
@@ -117,11 +127,15 @@ class DbCrud implements Crud
      */
     public function delete($pk_value)
     {
-        $pk_value = is_array($pk_value) ? $pk_value : [ $this->getPrimaryKey() => $pk_value ];
-        $table = $this->getMainTable();
-        $conditions_sql = $this->renderConditions($pk_value);
-        $sql = sprintf('DELETE FROM %s WHERE %s', $table, $conditions_sql);
-        Registry::getDbConnection()->execute($sql, $this->conditionsToParameters($pk_value));
+        try {
+            $pk_value = is_array($pk_value) ? $pk_value : [ $this->getPrimaryKey() => $pk_value ];
+            $table = $this->getMainTable();
+            $conditions_sql = $this->renderConditions($pk_value);
+            $sql = sprintf('DELETE FROM %s WHERE %s', $table, $conditions_sql);
+            Registry::getDbConnection()->execute($sql, $this->conditionsToParameters($pk_value));
+        } catch (\Exception $e) {
+            throw new AOrmException($e->getMessage(), 0, $e);
+        }
     }
 
     /**
@@ -167,5 +181,28 @@ class DbCrud implements Crud
     protected function criteriaToString(array $criteria)
     {
         return str_replace("\n", '', var_export($criteria, true));
+    }
+
+    /**
+     * Performs an INSERT, optionally with an ON DUPLICATE KEY UPDATE clause, for the given record.
+     *
+     * @param array $record associative array representing the record to be saved
+     * @param $on_duplicate_key_update set to true to add an ON DUPLICATE KEY UPDATE clause with all fields
+     * @return mixed the primary key value of the saved record, either a single value or an associative array, keyed on column names
+     * @throws AOrmException
+     */
+    private function saveOrInsert(array $record, $on_duplicate_key_update)
+    {
+        $table = $this->getMainTable();
+        $db_connection = Registry::getDbConnection();
+        $save_data = $db_connection->getSubsetArrayForInsert($record, $table);
+        $pk_value = $db_connection->insert($table, $save_data, $on_duplicate_key_update);
+        if (!$pk_value) {
+            $primary_key = $this->getPrimaryKey();
+            $pk_value = is_array($primary_key)
+                ? array_intersect_key($record, array_flip($primary_key))
+                : $record[$primary_key];
+        }
+        return $pk_value;
     }
 }
